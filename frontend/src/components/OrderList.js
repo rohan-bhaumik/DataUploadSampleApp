@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8000';
@@ -8,11 +8,7 @@ function OrderList({ orders, setOrders, refresh }) {
   const [error, setError] = useState('');
   const [expandedOrder, setExpandedOrder] = useState(null);
 
-  useEffect(() => {
-    fetchOrders();
-  }, [refresh]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/orders/`);
@@ -24,7 +20,11 @@ function OrderList({ orders, setOrders, refresh }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setOrders]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [refresh, fetchOrders]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

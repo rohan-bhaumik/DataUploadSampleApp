@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8000';
@@ -7,11 +7,7 @@ function CustomerList({ customers, setCustomers, refresh }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetchCustomers();
-  }, [refresh]);
-
-  const fetchCustomers = async () => {
+  const fetchCustomers = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/customers/`);
@@ -23,7 +19,11 @@ function CustomerList({ customers, setCustomers, refresh }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setCustomers]);
+
+  useEffect(() => {
+    fetchCustomers();
+  }, [refresh, fetchCustomers]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
