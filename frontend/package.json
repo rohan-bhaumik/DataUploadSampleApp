@@ -2,6 +2,7 @@
   "name": "ecommerce-portal-frontend",
   "version": "1.0.0",
   "description": "E-Commerce Portal Frontend",
+  "homepage": "https://rohan-bhaumik.github.io/DataUploadSampleApp",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

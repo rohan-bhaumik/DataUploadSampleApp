@@ -3,7 +3,11 @@ import CustomerForm from './components/CustomerForm';
 import OrderForm from './components/OrderForm';
 import CustomerList from './components/CustomerList';
 import OrderList from './components/OrderList';
+import DemoNotice from './components/DemoNotice';
 import './App.css';
+
+// Check if we're running on GitHub Pages
+const isGitHubPages = window.location.hostname === 'rohan-bhaumik.github.io';
 
 function App() {
   const [activeTab, setActiveTab] = useState('customers');
@@ -74,6 +78,8 @@ function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
+          {/* Show demo notice on GitHub Pages */}
+          {isGitHubPages && <DemoNotice />}
           {activeTab === 'customers' && (
             <CustomerList customers={customers} setCustomers={setCustomers} refresh={refresh} />
           )}
